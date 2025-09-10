@@ -200,53 +200,52 @@ with col2:
         c1, c2 = st.columns([3, 1])
         with c1:
             if st.button("💭 Ask", use_container_width=True) and query:
-            try:
-                with st.spinner("🤔 Thinking... Please wait"):
-                    # --- Imports ---
-                    from langchain.prompts import PromptTemplate
-                    from langchain.chains import RetrievalQA
-                    from langchain_community.vectorstores import FAISS
-                    from langchain_community.embeddings import HuggingFaceEmbeddings
-                    from transformers import pipeline
-                    from langchain.llms import HuggingFacePipeline
-    
-                    # --- Load retriever ---
-                    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
-                    vectorstore = FAISS.load_local(INDEX_PATH, embeddings, allow_dangerous_deserialization=True)
-                    retriever = vectorstore.as_retriever(search_kwargs={"k": retrieval_k})
-    
-                    # --- Setup LLM ---
-                    local_llm = pipeline("text-generation", model=MODEL_NAME)
-                    llm = HuggingFacePipeline(pipeline=local_llm)
-    
-                    # --- Prompt ---
-                    template = """Answer the question using the context below.
-                    If not in context, say you don’t know.
-    
-                    Context: {context}
-                    Question: {question}
-                    Answer:"""
-                    prompt = PromptTemplate(input_variables=["context", "question"], template=template)
-    
-                    # --- QA Chain ---
-                    qa = RetrievalQA.from_chain_type(
-                        llm=llm,
-                        retriever=retriever,
-                        chain_type="stuff",
-                        chain_type_kwargs={"prompt": prompt}
-                    )
-    
-                    # --- Get Answer ---
-                    result = qa.run(query)
-    
-                    # --- Save to Chat ---
-                    st.session_state.chat_history.append((query, result))
-                    st.rerun()
-    
-            except Exception as e:
-                st.error(f"❌ Error generating response: {e}")
-                logger.error(f"Chat error: {e}")
-            
+                try:
+                    with st.spinner("🤔 Thinking... Please wait"):
+                        # --- Imports ---
+                        from langchain.prompts import PromptTemplate
+                        from langchain.chains import RetrievalQA
+                        from langchain_community.vectorstores import FAISS
+                        from langchain_community.embeddings import HuggingFaceEmbeddings
+                        from transformers import pipeline
+                        from langchain.llms import HuggingFacePipeline
+
+                        # --- Load retriever ---
+                        embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
+                        vectorstore = FAISS.load_local(INDEX_PATH, embeddings, allow_dangerous_deserialization=True)
+                        retriever = vectorstore.as_retriever(search_kwargs={"k": retrieval_k})
+
+                        # --- Setup LLM ---
+                        local_llm = pipeline("text-generation", model=MODEL_NAME)
+                        llm = HuggingFacePipeline(pipeline=local_llm)
+
+                        # --- Prompt ---
+                        template = """Answer the question using the context below.
+                        If not in context, say you don’t know.
+
+                        Context: {context}
+                        Question: {question}
+                        Answer:"""
+                        prompt = PromptTemplate(input_variables=["context", "question"], template=template)
+
+                        # --- QA Chain ---
+                        qa = RetrievalQA.from_chain_type(
+                            llm=llm,
+                            retriever=retriever,
+                            chain_type="stuff",
+                            chain_type_kwargs={"prompt": prompt}
+                        )
+
+                        # --- Get Answer ---
+                        result = qa.run(query)
+
+                        # --- Save to Chat ---
+                        st.session_state.chat_history.append((query, result))
+                        st.rerun()
+
+                except Exception as e:
+                    st.error(f"❌ Error generating response: {e}")
+                    logger.error(f"Chat error: {e}")
 
         with c2:
             if st.button("🗑️ Clear", use_container_width=True):
@@ -261,8 +260,6 @@ with col2:
 
 # =======================
 # Footer
-from datetime import datetime
-
 current_year = datetime.now().year
 
 st.markdown(
