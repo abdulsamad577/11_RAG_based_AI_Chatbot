@@ -90,7 +90,7 @@ st.markdown("""
 # Config
 # =======================
 INDEX_PATH = "faiss_index"
-MODEL_NAME = "Tesslate/WEBGEN-4B-Preview"
+MODEL_NAME = "continuedev/instinct"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # =======================
