@@ -90,7 +90,7 @@ st.markdown("""
 # Config
 # =======================
 INDEX_PATH = "faiss_index"
-MODEL_NAME = "microsoft/phi-2"
+MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # =======================
