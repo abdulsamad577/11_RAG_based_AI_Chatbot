@@ -90,7 +90,7 @@ st.markdown("""
 # Config
 # =======================
 INDEX_PATH = "faiss_index"
-MODEL_NAME = "Qwen/Qwen3-0.6B"
+MODEL_NAME = "openai/gpt-oss-20b"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # =======================
