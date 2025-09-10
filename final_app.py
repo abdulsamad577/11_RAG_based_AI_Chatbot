@@ -90,7 +90,7 @@ st.markdown("""
 # Config
 # =======================
 INDEX_PATH = "faiss_index"
-MODEL_NAME = "microsoft/Phi-3-mini-128k-instruct"
+MODEL_NAME = "microsoft/phi-2"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # =======================
